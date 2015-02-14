@@ -1,0 +1,99 @@
+
+import java.util.Scanner;
+
+public class Diving 
+{
+	final static int SCORES = 7;
+	final static double MAX_DEGREE_OF_DIFFICULTY = 3.8;
+	final static double MIN_DEGREE_OF_DIFFICULTY = 1.2;
+	private static int judge;
+	private static double degreeOfDifficulty;
+	private static double score;
+	private static double totalScore;
+	private static boolean validInput;
+	public static double allScores[] = new double[SCORES];
+
+	public static void main(String [] args)
+	{
+		introduction();
+		inputValidDegreeOfDifficulty();
+		inputAllScores();
+		calculateScore();
+		System.out.println("The total score of the diver is " + totalScore);
+	}
+	private static double inputValidScore()
+	{
+		Scanner keyboard = new Scanner(System.in);
+
+		boolean validInput = false;
+		System.out.println("Enter score for judge " + (judge + 1));//add plus 1 to show correct judge number
+		while(!validInput)
+		{
+			score = keyboard.nextDouble();
+			if ((score >= 0) && (score <= 10))
+				validInput = true;
+			else
+			{
+				System.out.println("Not a valid score. Enter score between 1 to 10.");
+				validInput = false;
+			}
+		}	
+		return score;
+	}
+	private static double[] inputAllScores()
+	{
+		for(judge = 0; judge < SCORES; judge++)//7 times
+		{
+			allScores[judge] = inputValidScore();
+			
+			System.out.println(allScores[judge]);
+		}
+		return allScores;
+	}
+	private static double inputValidDegreeOfDifficulty()
+	{
+		Scanner keyboard = new Scanner(System.in);
+		validInput = false;
+		System.out.println("Please enter the degree of difficulty for the dive.\n"
+				+ "Note that the degree of difficulty must be between 1.2 and 3.8");
+		while(!validInput)
+		{
+			degreeOfDifficulty = keyboard.nextDouble();
+			if((degreeOfDifficulty >= MIN_DEGREE_OF_DIFFICULTY) && (degreeOfDifficulty <= MAX_DEGREE_OF_DIFFICULTY))
+				validInput = true;
+			else
+				System.out.println("Please enter a number between 1.2 and 3.8");
+		}
+		return degreeOfDifficulty;
+	}
+	private static double calculateScore()
+	{
+		double lowestNumber;
+		double highestNumber;
+		totalScore = 0;
+		lowestNumber = allScores[0];
+		highestNumber = allScores[0];
+		for (judge = 0; judge < SCORES; judge++)
+		{ 
+			if (allScores[judge] < lowestNumber)
+				lowestNumber = allScores[judge];
+			if(allScores[judge] > highestNumber)
+				highestNumber = allScores[judge];
+		}
+		for (judge = 0; judge < SCORES; judge++)
+			totalScore = totalScore + allScores[judge];
+		
+		totalScore = totalScore - lowestNumber - highestNumber;//	
+		totalScore = totalScore * degreeOfDifficulty;
+		totalScore = totalScore * 0.6;
+		return totalScore;
+	}
+	private static void introduction()
+	{
+		Scanner keyboard = new Scanner(System.in);
+
+		System.out.println("Hello , welcome to the 2015 national diving tournament.");
+		System.out.println("Please press enter to start the judging.");
+		keyboard.nextLine();
+	}
+}
