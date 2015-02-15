@@ -45,8 +45,6 @@ public class Diving
 		for(judge = 0; judge < SCORES; judge++)//7 times
 		{
 			allScores[judge] = inputValidScore();
-			
-			System.out.println(allScores[judge]);
 		}
 		return allScores;
 	}
